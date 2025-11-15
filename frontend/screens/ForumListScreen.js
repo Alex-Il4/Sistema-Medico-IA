@@ -33,7 +33,7 @@ export default function ForumListScreen({ route }) {
             const data = snapshot.val() || {};
             const lista = Object.keys(data)
                 .map((id) => ({ id, ...data[id] }))
-                .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)); 
+                .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)); //descendente
             setPublicaciones(lista);
             setLoading(false);
         }, (error) => {

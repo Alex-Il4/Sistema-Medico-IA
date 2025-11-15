@@ -13,6 +13,8 @@ import { useNavigation } from '@react-navigation/native'
 const { width } = Dimensions.get('window');
 const IS_TABLET = width >= 600;
 const PADDING_CONTENT_HORIZONTAL = IS_TABLET ? 40 : 16;
+const INPUT_LINE_HEIGHT = Platform.OS === 'ios' ? 20 : 18;
+const INPUT_PADDING_VERTICAL = Platform.OS === 'ios' ? 10 : 8;
 
 export default function PostDetailScreen({ route }) {
     const { postId, postTitle, user } = route.params;
@@ -33,7 +35,7 @@ export default function PostDetailScreen({ route }) {
           id: key,
           ...data[key],
         }));
-        commentList.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0)); 
+        commentList.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0)); //ascedente
         setComments(commentList);
         setLoading(false);
       });
@@ -134,6 +136,7 @@ export default function PostDetailScreen({ route }) {
       const isEditing = editingComment === item.id;
       const displayTime = new Date(item.timestamp).toLocaleString();
       
+      //Si está editando, mostrar un input para editar
       if (isEditing) {
         return (
           <View style={[styles.commentItem, styles.commentEditContainer]}>
@@ -155,6 +158,7 @@ export default function PostDetailScreen({ route }) {
         );
       }
       
+      //Renderización de un comentario
       return (
         <View style={styles.commentItem}>
           <Text style={styles.commentAuthor} allowFontScaling={true}>
@@ -196,6 +200,7 @@ export default function PostDetailScreen({ route }) {
         );
     }
 
+    //Si no hay comentarios, mostrar un mensaje
     return (
       <SafeAreaView style={styles.safeArea}>
         <StatusBar barStyle="dark-content" backgroundColor="#EAEEFFFF" />
@@ -333,7 +338,10 @@ const styles = StyleSheet.create({
         padding: 8, 
         minHeight: 60, 
         marginBottom: 5, 
-        fontSize: IS_TABLET ? 14 : 13 
+        fontSize: IS_TABLET ? 14 : 13,
+        paddingVertical: INPUT_PADDING_VERTICAL,
+        lineHeight: INPUT_LINE_HEIGHT,
+        textAlignVertical: "top",
     },
     commentEditActions: { 
         flexDirection: 'row', 
@@ -367,19 +375,23 @@ const styles = StyleSheet.create({
         borderTopWidth: 1, 
         borderColor: '#eee', 
         backgroundColor: '#fff',
-        paddingHorizontal: PADDING_CONTENT_HORIZONTAL 
+        paddingHorizontal: PADDING_CONTENT_HORIZONTAL
     },
     input: { 
-        flex: 1, 
+        flex: 1, 
         borderWidth: 1, 
         borderColor: '#CCC', 
         borderRadius: 25, 
         paddingHorizontal: 15, 
         paddingVertical: Platform.OS === 'ios' ? 12 : 10, 
         marginRight: 8, 
-        minHeight: 45, 
-        maxHeight: 120 
-    },
+        minHeight: 45,
+        maxHeight: 120,
+        paddingVertical: INPUT_PADDING_VERTICAL,
+        lineHeight: INPUT_LINE_HEIGHT,
+        fontSize: IS_TABLET ? 16 : 14,
+        textAlignVertical: "top",
+    },
     sendButton: { 
         backgroundColor: '#008b38ff', 
         borderRadius: 25, 
