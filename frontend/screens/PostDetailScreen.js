@@ -5,7 +5,7 @@ import {
     ActivityIndicator, Dimensions, StatusBar 
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ref, onValue, push, runTransaction, remove, update } from 'firebase/database'; // ⬅️ Funciones CRUD y Transacción
+import { ref, onValue, push, runTransaction, remove, update } from 'firebase/database';
 import { db } from '../../db/firebaseConfig';
 import { useNavigation } from '@react-navigation/native'
 
